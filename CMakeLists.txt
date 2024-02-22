@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   # std_msgs
   # pcl_conversions
   # pcl_ros
+  tf
   arvc_utils
 )
 
@@ -20,6 +21,11 @@ add_definitions(${PCL_DEFINITIONS})
 
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
+
+find_package(yaml-cpp REQUIRED)
+include_directories(${YAML_CPP_INCLUDE_DIR})
+link_directories(${YAML_CPP_LIBRARY_DIRS})
+add_definitions(${YAML_CPP_DEFINITIONS})
 
 
 ###################################
@@ -52,8 +58,8 @@ link_directories(${catkin_LIBRARY_DIRS})
 add_definitions(${catkin_DEFINITIONS})
 
 
-# add_executable(arvc_save_cloud src/arvc_save_cloud.cpp)
-# target_link_libraries(arvc_save_cloud ${PCL_LIBRARIES} ${catkin_LIBRARIES})
+add_executable(arvc_save_cloud src/arvc_save_cloud.cpp)
+target_link_libraries(arvc_save_cloud ${PCL_LIBRARIES} ${catkin_LIBRARIES} ${YAML_CPP_LIBRARIES})
 
 # add_executable(arvc_plot_cloud_by_field src/arvc_plot_cloud_by_field.cpp)
 # target_link_libraries(arvc_plot_cloud_by_field ${PCL_LIBRARIES} ${catkin_LIBRARIES})
@@ -64,5 +70,5 @@ add_definitions(${catkin_DEFINITIONS})
 # add_executable(arvc_compute_curvature src/arvc_compute_curvature.cpp)
 # target_link_libraries(arvc_compute_curvature ${PCL_LIBRARIES} ${catkin_LIBRARIES})
 
-add_executable(arvc_pcl_ros_node src/main.cpp)
-target_link_libraries(arvc_pcl_ros_node ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${EIGEN3_LIBRARIES})
+# add_executable(arvc_pcl_ros_node src/main.cpp)
+# target_link_libraries(arvc_pcl_ros_node ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${EIGEN3_LIBRARIES})
